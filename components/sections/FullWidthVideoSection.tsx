@@ -10,7 +10,7 @@ export default function FullWidthVideoSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="w-full h-[520px]"
+        className="w-full h-[300px] md:h-[520px]"
       >
         <video
           src="https://framerusercontent.com/assets/wVOvfhHbICVcDAbiNHQ4O9y54QA.mp4"

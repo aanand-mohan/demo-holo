@@ -26,35 +26,41 @@ export default function IntegrationsSection() {
   const [paths, setPaths] = useState<string[]>([]);
 
   useLayoutEffect(() => {
-    if (!containerRef.current) return;
+    const updatePaths = () => {
+      if (!containerRef.current) return;
 
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const centerX = containerRect.width / 2;
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const centerX = containerRect.width / 2;
 
-    const newPaths = iconRefs.current.map((el) => {
-      if (!el) return "";
+      const newPaths = iconRefs.current.map((el) => {
+        if (!el) return "";
 
-      const rect = el.getBoundingClientRect();
-      const startX = rect.left - containerRect.left + rect.width / 2;
+        const rect = el.getBoundingClientRect();
+        const startX = rect.left - containerRect.left + rect.width / 2;
 
-      return `
+        return `
         M ${startX} 0
         C ${startX} 180
           ${centerX} 120
           ${centerX} 300
       `;
-    });
+      });
 
-    setPaths(newPaths);
+      setPaths(newPaths);
+    };
+
+    updatePaths();
+    window.addEventListener("resize", updatePaths);
+    return () => window.removeEventListener("resize", updatePaths);
   }, []);
 
   return (
-    <section className="bg-white max-w-full mx-auto py-28 overflow-hidden">
-      <div className="max-w-full mx-auto px-6">
+    <section className="bg-white w-full max-w-[100vw] mx-auto py-28 overflow-hidden px-0 md:px-0">
+      <div className="w-full max-w-[100vw] mx-auto px-4 md:px-6 overflow-hidden">
 
         {/* HEADLINE */}
-        <div className="text-center max-w-4xl mx-auto mb-24">
-          <h2 className="text-4xl md:text-5xl font-semibold leading-tight">
+        <div className="text-center max-w-4xl mx-auto mb-24 px-4">
+          <h2 className="text-3xl md:text-5xl font-semibold leading-tight break-words">
             AI trained on millions of marketing assets from top ecommerce brands
           </h2>
         </div>
@@ -62,11 +68,11 @@ export default function IntegrationsSection() {
         {/* VISUAL */}
         <div
           ref={containerRef}
-          className="relative flex justify-center items-center min-h-[820px] mb-36"
+          className="relative flex justify-center items-center min-h-[500px] md:min-h-[820px] mb-36 overflow-hidden max-w-full w-full"
         >
 
           {/* ICON ROW */}
-          <div className="absolute top-0 flex gap-14">
+          <div className="absolute top-0 flex gap-5 md:gap-14 px-4 w-full justify-center flex-wrap">
             {BRANDS.map((b, i) => (
               <span
                 key={i}
@@ -135,7 +141,8 @@ export default function IntegrationsSection() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="
               relative z-10
-              w-[360px]
+              w-[80vw]
+              max-w-[360px]
               md:w-[420px]
               lg:w-[480px]
               xl:w-[520px]

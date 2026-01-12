@@ -13,7 +13,7 @@ export default function FinalCtaSection() {
                 className="max-w-4xl mx-auto px-6 text-center"
             >
                 {/* Heading */}
-                <h2 className="text-[70px] md:text-[80px] leading-[1.1] font-bold text-[#1D1D1F] mb-4 tracking-tight">
+                <h2 className="text-4xl md:text-[80px] leading-[1.1] font-bold text-[#1D1D1F] mb-4 tracking-tight">
                     Ready to create <br /> agency-like content?
                 </h2>
 

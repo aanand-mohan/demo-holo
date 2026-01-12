@@ -22,12 +22,12 @@ export default function Hero() {
             </div>
 
             {/* 2. Headlines */}
-            <h1 className="text-5xl md:text-[68px] font-[900] leading-[1.05] tracking-tight text-[#1D1D1F] max-w-4xl mb-6">
+            <h1 className="text-4xl md:text-[68px] font-[900] leading-[1.05] tracking-tight text-[#1D1D1F] max-w-4xl mb-6">
                 Launch 10x more content. <br className="hidden md:block" />
                 75% faster.
             </h1>
 
-            <p className="text-xl md:text-[28px] font-medium text-[#6E6E73] max-w-3xl leading-relaxed mb-12">
+            <p className="text-lg md:text-[28px] font-medium text-[#6E6E73] max-w-3xl leading-relaxed mb-12">
                 Holo turns your website into ads, emails, and social posts. 100&#39;s of content pieces generated, while you sleep.
             </p>
 

@@ -37,7 +37,7 @@ const team: TeamMember[] = [
 
 export default function AboutTeamSection() {
     return (
-        <section id="about" className="w-full bg-white py-32">
+        <section id="about" className="w-full bg-white py-32 overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-8 items-start">

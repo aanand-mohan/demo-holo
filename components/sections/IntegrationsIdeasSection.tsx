@@ -93,39 +93,43 @@ function MarqueeRow({ items, reverse = false }: { items: typeof TAGS; reverse?: 
 
 export default function IntegrationsIdeasSection() {
     return (
-        <section className="bg-white py-28 overflow-hidden">
+        <section className="bg-white py-28 overflow-hidden w-full max-w-[100vw]">
             <div className="max-w-7xl mx-auto px-6">
 
-                {/* TOP GRID */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                {/* TOP GRID -> FLEX */}
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
 
                     {/* LEFT CONTENT */}
-                    <div>
-                        <p className="text-sm text-gray-500 mb-4">
+                    <div className="flex-1 w-full text-left">
+                        <p className="text-sm text-gray-500 mb-4 font-medium uppercase tracking-wide">
                             Unlimited Ads and Social Media Post Ideas
                         </p>
 
-                        <h2 className="text-4xl md:text-5xl font-semibold leading-tight mb-6">
-                            Fill Your Content Calendar,
-                            <br />3 Months In Advance
+                        <h2 className="text-4xl md:text-5xl font-semibold leading-tight mb-6 text-gray-900">
+                            Fill out your content calendar.
+                            <br />3 months in advance.
                         </h2>
 
-                        <p className="text-gray-500 text-lg max-w-xl mb-10">
+                        <p className="text-gray-500 text-lg max-w-xl mb-10 leading-relaxed">
                             You rest. Holo doesn’t. It works in the background to generate
                             marketing visuals while you sleep. So you can swipe in the
                             morning and launch just before lunch.
                         </p>
 
                         {/* INFO CARD */}
-                        <div className="flex items-start gap-4  rounded-2xl p-4 max-w-md bg-white">
-                            <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center">
-                                <img className="w-full bg-white h-full object-contain" src="https://framerusercontent.com/images/UoQeU7lV0WfE98U8Ynxnviyi2A.png?scale-down-to=512&width=736&height=708" alt="" />
+                        <div className="hidden md:flex items-start gap-4 rounded-2xl p-4 max-w-md bg-white border border-gray-100 shadow-sm">
+                            <div className="w-16 h-16 shrink-0 rounded-full bg-gray-50 flex items-center justify-center p-2">
+                                <img
+                                    className="w-full h-full object-contain"
+                                    src="https://framerusercontent.com/images/UoQeU7lV0WfE98U8Ynxnviyi2A.png?scale-down-to=512&width=736&height=708"
+                                    alt="Swipe features"
+                                />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-yellow-500">
+                                <p className="text-sm font-bold text-[#F59E0B] mb-1">
                                     Like Tinder, but for content.
                                 </p>
-                                <p className="text-sm text-gray-600">
+                                <p className="text-sm text-gray-500 leading-snug">
                                     Swipe to skip, save, or generate what you like best.
                                 </p>
                             </div>
@@ -133,8 +137,8 @@ export default function IntegrationsIdeasSection() {
                     </div>
 
                     {/* RIGHT VIDEO */}
-                    <div className="relative w-full h-[420px] rounded-3xl bg-white flex items-center justify-center overflow-hidden">
-                        <div className="absolute bottom-6 w-[60%] h-[30px] bg-black/5 blur-2xl rounded-full" />
+                    <div className="relative w-full lg:w-[45%] h-[360px] md:h-[420px] rounded-3xl bg-white flex items-center justify-center overflow-hidden border border-gray-50 shadow-sm">
+                        <div className="absolute bottom-6 w-[60%] h-[30px] bg-black/5 blur-2xl rounded-full pointer-events-none" />
 
                         <video
                             src="https://framerusercontent.com/assets/85orujrTWcY7RrRFXiFMzEPMA.mp4"
@@ -142,7 +146,7 @@ export default function IntegrationsIdeasSection() {
                             loop
                             muted
                             playsInline
-                            className="relative max-w-[85%] max-h-[85%] object-contain bg-white"
+                            className="relative max-w-[90%] max-h-[90%] object-contain"
                         />
                     </div>
                 </div>

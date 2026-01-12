@@ -63,7 +63,7 @@ export default function HowItWorksSection() {
                 duration: 0.8,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="grid grid-cols-[80px_1fr] gap-12"
+              className="flex flex-col md:grid md:grid-cols-[80px_1fr] gap-6 md:gap-12"
             >
               {/* Left line + number */}
               <div className="relative flex flex-col items-center">

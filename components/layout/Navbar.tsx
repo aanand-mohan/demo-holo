@@ -23,6 +23,12 @@ export default function Navbar() {
     let lastScrollY = window.scrollY;
 
     const onScroll = () => {
+      // On mobile, we never want to trigger the "scrolled down" state animations/hiding
+      if (window.innerWidth < 768) {
+        setIsScrolledDown(false);
+        return;
+      }
+
       const currentScrollY = window.scrollY;
 
       // If at the very top, always show the centered (default) state

@@ -44,7 +44,7 @@ export default function Integrations3DSection() {
 
   return (
     <section className="w-full bg-white py-32 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
 
         {/* Headline */}
         <div className="text-center mb-20">
@@ -69,7 +69,7 @@ export default function Integrations3DSection() {
                 opacity: { duration: 0.4 },
                 scale: { duration: 0.4 },
               }}
-              className="relative w-[360px] h-[360px]"
+              className="relative w-full max-w-[360px] h-[360px]"
               style={{
                 transformStyle: "preserve-3d",
                 perspective: "1200px",
@@ -121,8 +121,8 @@ export default function Integrations3DSection() {
               {tab}
               <span
                 className={`absolute left-1/2 -translate-x-1/2 -bottom-3 h-[3px] w-10 rounded-full transition-all ${activeTab === tab
-                    ? "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-                    : "bg-gray-300"
+                  ? "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+                  : "bg-gray-300"
                   }`}
               />
             </button>
@@ -130,6 +130,6 @@ export default function Integrations3DSection() {
         </div>
 
       </div>
-    </section>
+    </section >
   );
 }

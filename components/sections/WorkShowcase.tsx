@@ -43,7 +43,7 @@ export default function WorkShowcase() {
     ];
 
     return (
-        <section className="py-24 bg-white overflow-hidden md:w-[80%]">
+        <section className="py-24 bg-white overflow-hidden w-full max-w-[100vw]">
             <div className="text-center mb-16 px-4">
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-[#1D1D1F] max-w-4xl mx-auto">
                     You’ve probably seen our work. <br />
@@ -59,7 +59,7 @@ export default function WorkShowcase() {
                     {items.map((item, idx) => (
                         <div
                             key={idx}
-                            className="relative w-[300px] h-[400px] md:w-[360px] md:h-[480px] flex-shrink-0 bg-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                            className="relative w-[80vw] max-w-[300px] h-[400px] md:w-[360px] md:h-[480px] flex-shrink-0 bg-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                         >
                             {item.type === "video" ? (
                                 <video

@@ -22,14 +22,14 @@ export default function LanguagesSection() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="text-4xl md:text-[56px] font-semibold text-black text-center"
+                        className="text-3xl md:text-[56px] font-semibold text-black text-center"
                     >
                         99+ languages
                     </motion.h2>
                 </div>
 
                 {/* Floating Card - Paper Plane */}
-             
+
             </div>
         </section>
     );

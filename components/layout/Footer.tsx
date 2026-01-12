@@ -5,8 +5,8 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-        <footer className="bg-white pt-24 pb-16 px-6 md:px-12 lg:px-16 w-[1200px]">
-            <div className="mx-auto">
+        <footer className="bg-white pt-24 pb-16 px-6 md:px-12 lg:px-16 w-full max-w-[1200px] mx-auto">
+            <div className="w-full">
                 {/* Top section - Contact & Mystery Gift */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 mb-24 md:mb-20">
                     {/* Left: Contact */}
@@ -128,19 +128,19 @@ export default function Footer() {
                         © 2025 All Rights Reserved
                     </p>
                     <div
-  className="text-[#1D1D1F]"
-  style={{
-    fontFamily:
-      '"Wonderkids Regular", "Wonderkids Regular Placeholder", sans-serif',
-    fontSize: "40px",
-    lineHeight: "36px",
-    letterSpacing: "-0.2px",
-    fontWeight: 400,
-    textAlign: "left",
-  }}
->
-  Holo
-</div>
+                        className="text-[#1D1D1F]"
+                        style={{
+                            fontFamily:
+                                '"Wonderkids Regular", "Wonderkids Regular Placeholder", sans-serif',
+                            fontSize: "40px",
+                            lineHeight: "36px",
+                            letterSpacing: "-0.2px",
+                            fontWeight: 400,
+                            textAlign: "left",
+                        }}
+                    >
+                        Holo
+                    </div>
 
                 </div>
             </div>
