@@ -21,7 +21,7 @@ export default function VideoShowcaseSection() {
   };
 
   return (
-    <section className="w-full flex justify-center py-32 bg-white">
+    <section className="w-full flex justify-center py-12 md:py-32 bg-white">
       <motion.div
         ref={containerRef}
         initial={{ opacity: 0, y: 120 }}
@@ -30,7 +30,7 @@ export default function VideoShowcaseSection() {
           duration: 0.9,
           ease: [0.22, 1, 0.36, 1],
         }}
-        className="relative w-full max-w-6xl h-[520px] rounded-[28px] bg-[#efefef] overflow-hidden"
+        className="relative w-full max-w-6xl h-[280px] md:h-[520px] rounded-xl md:rounded-[28px] bg-[#efefef] overflow-hidden mx-4 md:mx-0"
       >
         {/* Background grid */}
         <div className="absolute inset-0 grid grid-cols-4 gap-6 p-6 opacity-40">

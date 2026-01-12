@@ -3,45 +3,68 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-
-import {
-  Facebook,
-  Mail,
-  Instagram,
-  User,
-  Video,
-  Megaphone,
-  Users
-} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [isMobileSubMenuOpen, setIsMobileSubMenuOpen] = useState(false);
+  const [isScrolledDown, setIsScrolledDown] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    // Check initial screen size and listen for resizing
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // If at the very top, always show the centered (default) state
+      if (currentScrollY <= 20) {
+        setIsScrolledDown(false);
+      } else {
+        // If we are scrolled down...
+        if (currentScrollY > lastScrollY) {
+          // AND scrolling down -> Show wide/hidden state
+          setIsScrolledDown(true);
+        } else {
+          // AND scrolling up -> Show centered state
+          setIsScrolledDown(false);
+        }
+      }
+      lastScrollY = currentScrollY;
+    };
+
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+
+
   const menuItems = [
-    { name: "Use cases", hasDropdown: true },
+    {
+      name: "Use cases",
+      hasDropdown: true,
+      children: [
+        { name: "Facebook Ads Maker", color: "bg-blue-100 text-blue-600" },
+        { name: "AI Newsletter Generator", color: "bg-purple-100 text-purple-600" },
+        { name: "Instagram Ads Maker", color: "bg-rose-100 text-rose-600" },
+        { name: "AI UGC Generator", color: "bg-indigo-100 text-indigo-600" },
+        { name: "TikTok Video Generator", color: "bg-zinc-100 text-black" },
+        { name: "Ad Generator", color: "bg-orange-100 text-orange-600" },
+        { name: "Influencer Generator", color: "bg-pink-100 text-pink-600" },
+      ]
+    },
     { name: "Affiliate", href: "#" },
     { name: "Blog", href: "#" },
     { name: "About us", href: "#" },
     { name: "Login", href: "#" },
-  ];
-
-  const useCases = [
-    { label: "Facebook Ads Maker", icon: Facebook, bgColor: "bg-blue-50", iconColor: "text-blue-600" },
-    { label: "AI Newsletter Generator", icon: Mail, bgColor: "bg-gray-100", iconColor: "text-gray-600" },
-    { label: "Instagram Ads Maker", icon: Instagram, bgColor: "bg-pink-50", iconColor: "text-pink-600" },
-    { label: "AI UGC Generator", icon: User, bgColor: "bg-purple-50", iconColor: "text-purple-600" },
-    { label: "TikTok Video Generator", icon: Video, bgColor: "bg-blue-50", iconColor: "text-blue-500" },
-    { label: "Ad Generator", icon: Megaphone, bgColor: "bg-orange-50", iconColor: "text-orange-500" },
-    { label: "Influencer Generator", icon: Users, bgColor: "bg-rose-50", iconColor: "text-rose-500" },
   ];
 
   return (
@@ -50,20 +73,36 @@ export default function Navbar() {
         className={`
           relative mx-auto flex items-center
           transition-all duration-500 ease-in-out
-          px-6
-          ${isScrolled
-            ? "max-w-[1400px] justify-between"
-            : "max-w-fit justify-center gap-3"
+          px-4 md:px-6
+          
+          /* Mobile: Always full width/spread */
+          w-full justify-between
+          
+          /* Desktop: Adaptive */
+          md:w-auto
+          ${isScrolledDown
+            ? "md:max-w-[1400px] md:justify-between"
+            : "md:max-w-fit md:justify-center md:gap-3"
           }
         `}
       >
         {/* LOGO */}
         <motion.div
           className="pointer-events-auto bg-white/90 backdrop-blur-md shadow-sm rounded-full p-1.5"
-          animate={{ x: isScrolled ? -50 : 0 }}
+          animate={{ x: (isScrolledDown && !isMobile) ? -20 : 0 }}
           transition={{ type: "spring", stiffness: 220, damping: 26 }}
         >
-          <Link href="/" className="block relative w-10 h-10 rounded-full overflow-hidden">
+          <Link
+            href="/"
+            className="block relative w-9 h-9 md:w-10 md:h-10 rounded-full overflow-hidden"
+            onClick={(e) => {
+              // On mobile (less than 768px), toggle the menu instead of navigating
+              if (window.innerWidth < 768) {
+                e.preventDefault();
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+              }
+            }}
+          >
             <Image
               src="/logo.png"
               alt="Logo"
@@ -73,84 +112,39 @@ export default function Navbar() {
           </Link>
         </motion.div>
 
-        {/* NAV MENU */}
+        {/* DESKTOP NAV MENU */}
         <motion.div
           className="hidden md:flex pointer-events-auto bg-white/90 backdrop-blur-md shadow-sm rounded-full px-6 py-3 items-center gap-6"
           animate={{
-            opacity: isScrolled ? 0 : 1,
-            scale: isScrolled ? 0.94 : 1,
+            opacity: isScrolledDown ? 0 : 1,
+            scale: isScrolledDown ? 0.94 : 1,
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          style={{ pointerEvents: isScrolled ? "none" : "auto" }}
+          style={{ pointerEvents: isScrolledDown ? "none" : "auto" }}
         >
           {menuItems.map((item) => (
-            <div
+            <Link
               key={item.name}
-              className="relative"
-              onMouseEnter={() => setHoveredItem(item.name)}
-              onMouseLeave={() => setHoveredItem(null)}
+              href={item.href || "#"}
+              className="text-[15px] font-medium text-gray-800 hover:text-black transition flex items-center gap-1 whitespace-nowrap"
             >
-              <Link
-                href={item.href || "#"}
-                className="text-[15px] font-medium text-gray-800 hover:text-black transition flex items-center gap-1 whitespace-nowrap py-2"
-              >
-                {item.name}
-                {item.hasDropdown && (
-                  <svg
-                    width="10"
-                    height="6"
-                    viewBox="0 0 10 6"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className={`opacity-50 transition-transform duration-200 ${hoveredItem === item.name ? "rotate-180" : ""
-                      }`}
-                  >
-                    <path d="M1 1L5 5L9 1" />
-                  </svg>
-                )}
-              </Link>
-
-              {/* DROPDOWN */}
+              {item.name}
               {item.hasDropdown && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{
-                    opacity: hoveredItem === item.name ? 1 : 0,
-                    y: hoveredItem === item.name ? 0 : 10,
-                    scale: hoveredItem === item.name ? 1 : 0.95,
-                  }}
-                  transition={{ duration: 0.2 }}
-                  className={`
-                    absolute top-full -left-4 mt-1 w-72 
-                    bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] 
-                    border border-gray-100 p-2 overflow-hidden
-                    ${hoveredItem === item.name ? "pointer-events-auto" : "pointer-events-none"}
-                  `}
+                <svg
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="opacity-50"
                 >
-                  <div className="flex flex-col gap-0.5">
-                    {useCases.map((useCase) => (
-                      <Link
-                        key={useCase.label}
-                        href="#"
-                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 transition-colors group"
-                      >
-                        <div
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center ${useCase.bgColor}`}
-                        >
-                          <useCase.icon className={`w-4 h-4 ${useCase.iconColor}`} strokeWidth={2} />
-                        </div>
-                        <span className="text-base font-bold text-gray-800 group-hover:text-black">
-                          {useCase.label}
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
+                  <path d="M1 1L5 5L9 1" />
+                </svg>
               )}
-            </div>
+            </Link>
           ))}
         </motion.div>
 
@@ -165,10 +159,10 @@ export default function Navbar() {
             bg-[linear-gradient(107deg,#3e86c6_0%,#a666aa_25%,#ec4492_49%,#ee4454_73%,#f05427_100%)]
             shadow-sm
           "
-          animate={{ x: isScrolled ? 50 : 0 }}
+          animate={{ x: (isScrolledDown && !isMobile) ? 20 : 0 }}
           transition={{ type: "spring", stiffness: 220, damping: 26 }}
         >
-          <div className="bg-white rounded-full px-6 py-2.5">
+          <div className="bg-white rounded-full px-4 py-2 md:px-6 md:py-2.5">
             <Link
               href="#"
               className="flex items-center gap-2 text-sm font-semibold text-black whitespace-nowrap"
@@ -190,25 +184,86 @@ export default function Navbar() {
             </Link>
           </div>
         </motion.div>
-
-        {/* MOBILE MENU */}
-        <div className="md:hidden pointer-events-auto bg-white/90 backdrop-blur-md shadow-sm rounded-full p-3 ml-3">
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
       </div>
+
+      {/* MOBILE MENU DROPDOWN */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "auto" }}
+            exit={{ opacity: 0, y: -20, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden pointer-events-auto absolute top-full left-4 right-4 mt-2 bg-white/95 backdrop-blur-xl shadow-lg rounded-3xl overflow-hidden border border-gray-100"
+          >
+            <div className="flex flex-col p-6 gap-4">
+              {menuItems.map((item) => (
+                <div key={item.name} className="flex flex-col">
+                  {item.hasDropdown ? (
+                    <>
+                      <button
+                        onClick={() => setIsMobileSubMenuOpen(!isMobileSubMenuOpen)}
+                        className="text-xl font-bold text-gray-900 flex items-center justify-between w-full text-left"
+                      >
+                        {item.name}
+                        <motion.svg
+                          animate={{ rotate: isMobileSubMenuOpen ? 180 : 0 }}
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="text-gray-500"
+                        >
+                          <path d="M6 9l6 6 6-6" />
+                        </motion.svg>
+                      </button>
+                      <AnimatePresence>
+                        {isMobileSubMenuOpen && item.children && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="flex flex-col pl-2 pt-4 gap-4">
+                              {item.children.map((child: any) => (
+                                <Link
+                                  key={child.name}
+                                  href={child.href || "#"}
+                                  className="flex items-center gap-3 text-gray-600 hover:text-black transition group"
+                                >
+                                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${child.color || "bg-blue-100 text-blue-600"}`}>
+                                    {/* Simple Icon Placeholders */}
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                  </div>
+                                  <span className="text-[15px] font-medium">{child.name}</span>
+                                </Link>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href || "#"}
+                      className="text-xl font-bold text-gray-900 block"
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

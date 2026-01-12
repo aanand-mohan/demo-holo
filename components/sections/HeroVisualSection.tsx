@@ -7,14 +7,14 @@ const IntegrationsSection: FC = () => {
   return (
     <section
       id="integrations-1"
-      className="relative w-full max-w-6xl mx-auto h-[340px] md:h-[360px] rounded-xl overflow-hidden bg-white"
+      className="relative w-full max-w-6xl mx-auto h-auto md:h-[360px] rounded-xl overflow-hidden bg-white"
     >
-      <div className="flex w-full h-full">
-        {/* Left empty / content space */}
-        <div className="flex-1" />
+      <div className="flex flex-col-reverse md:flex-row w-full h-[340px] md:h-full">
+        {/* Left empty / content space - Hidden or reduced on mobile if it's just spacing */}
+        <div className="hidden md:block md:flex-1" />
 
         {/* Right visual / video area */}
-        <div className="relative w-[55%] h-full overflow-hidden">
+        <div className="relative w-full md:w-[55%] h-full overflow-hidden">
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
